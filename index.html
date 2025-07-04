@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ro" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Antrenament</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1 id="headerTitle"></h1>
+        </header>
+
+        <main id="mainContent">
+            <!-- VIEW 1: Dashboard -->
+            <section id="dashboardView">
+                <div id="todayCardContainer">
+                    <!-- Today's workout card will be injected here -->
+                </div>
+                <h3>Trofee & Realizări</h3>
+                <div id="trophyCase" class="trophy-case">
+                    <!-- Trophies will be injected here -->
+                </div>
+                <div id="trophyEmptyState" class="empty-state hidden">
+                    <p>Completează primul antrenament pentru a debloca realizări!</p>
+                </div>
+            </section>
+
+            <!-- VIEW 2: Plan -->
+            <section id="planView" class="hidden">
+                 <div id="planEditorContainer">
+                     <!-- The plan editor cards will be injected here -->
+                 </div>
+            </section>
+
+            <!-- VIEW 3: Progress -->
+            <section id="progressView" class="hidden">
+                <h3>Progres Săptămânal (Distanță)</h3>
+                <div id="chartContainer" class="chart-container">
+                    <!-- The progress chart bars will be injected here -->
+                </div>
+                <div id="chartEmptyState" class="empty-state hidden">
+                    <p>Niciun antrenament înregistrat. Datele vor apărea aici după ce loghezi prima alergare.</p>
+                </div>
+                <h3 style="margin-top: 24px;">Calendar Activități</h3>
+                <div class="calendar-header">
+                    <button id="prevMonthBtn" class="btn btn--secondary"><</button>
+                    <h3 id="calendarMonthYear"></h3>
+                    <button id="nextMonthBtn" class="btn btn--secondary">></button>
+                </div>
+                <div class="calendar-grid-header"><div>Lu</div><div>Ma</div><div>Mi</div><div>Jo</div><div>Vi</div><div>Sâ</div><div>Du</div></div>
+                <div id="calendarGrid" class="calendar-grid">
+                    <!-- Calendar days will be populated here -->
+                </div>
+            </section>
+
+            <!-- VIEW 4: Settings -->
+            <section id="settingsView" class="hidden">
+                <div class="card">
+                    <div class="settings-group">
+                        <label for="maxHrInput" class="settings-label">Puls Maxim (Max HR)</label>
+                        <input type="number" id="maxHrInput" class="form-control" placeholder="ex: 187">
+                        <p class="form-hint">Setează pulsul maxim pentru a calcula zonele de antrenament.</p>
+                    </div>
+                    <div class="settings-group">
+                        <label class="settings-label">Temă Vizuală</label>
+                        <div class="toggle-switch-container">
+                            <span>Light</span>
+                            <label class="toggle-switch"><input type="checkbox" id="themeToggle"><span class="slider"></span></label>
+                            <span>Dark</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="border-color: #e53e3e;">
+                    <div class="settings-group">
+                        <label class="settings-label">Zona de Pericol</label>
+                        <p class="form-hint">Această acțiune va șterge toate datele (antrenamente, recorduri).</p>
+                        <button id="resetDataBtn" class="btn btn--danger">Resetează Toate Datele</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-button active" data-view="dashboard">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Acasă</span>
+            </button>
+            <button class="nav-button" data-view="plan">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1V21c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h10.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7-.5-1.1V8.9L15.5 2z"/><path d="M15 2v7h7"/><path d="M8 16h8"/><path d="M8 12h8"/></svg>
+                <span>Plan</span>
+            </button>
+            <button class="nav-button" data-view="progress">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Progres</span>
+            </button>
+            <button class="nav-button" data-view="settings">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Setări</span>
+            </button>
+        </nav>
+    </div>
+    
+    <!-- Modals -->
+    <div id="logModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Înregistrează Antrenament</h3>
+                <button class="modal-close" data-action="close">×</button>
+            </div>
+            <form id="logForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="distanceInput" class="form-label">Distanța (km)</label>
+                        <input type="number" id="distanceInput" class="form-control" placeholder="ex: 5.2" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeInput" class="form-label">Timp (hh:mm:ss)</label>
+                        <input type="text" id="timeInput" class="form-control" placeholder="ex: 28:30">
+                    </div>
+                    <div class="form-group">
+                        <label for="rpeInput" class="form-label">Efort Perceput (1-10)</label>
+                        <div class="rpe-container">
+                            <span>Ușor</span>
+                            <input type="range" id="rpeInput" min="1" max="10" step="1" class="form-range">
+                            <span>Maxim</span>
+                        </div>
+                        <p class="rpe-value-display">Selectează o valoare</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="notesInput" class="form-label">Notițe</label>
+                        <textarea id="notesInput" rows="3" class="form-control" placeholder="Cum te-ai simțit? Orice detalii..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn--secondary" data-action="close">Anulează</button>
+                    <button type="submit" class="btn btn--primary">Salvează</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="logDetailModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="logDetailTitle">Detalii Antrenament</h3>
+                <button class="modal-close" data-action="close">×</button>
+            </div>
+            <div id="logDetailBody" class="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="workoutLibraryModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Alege Antrenament</h3>
+                <button class="modal-close" data-action="close">×</button>
+            </div>
+            <div id="workoutLibraryBody" class="modal-body library-grid"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
